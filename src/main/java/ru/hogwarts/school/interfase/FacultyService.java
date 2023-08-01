@@ -1,5 +1,6 @@
 package ru.hogwarts.school.interfase;
 
+import java.util.Collection;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.List;
@@ -10,11 +11,11 @@ public interface FacultyService {
 
     Faculty upDate(Faculty faculty);
 
-    Faculty delete(Long id);
+    void delete(Long id);
 
     Faculty get(Long id);
 
-    Map<Long, Faculty> getAll();
+    Collection<Faculty> getAll();
 
-    List<Faculty> getByColor(String color);
+    Collection<Faculty> getByColor(String color);
 }
