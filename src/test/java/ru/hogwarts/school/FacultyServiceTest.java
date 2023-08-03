@@ -83,4 +83,17 @@ public class FacultyServiceTest {
         Collection<Faculty> faculties = facul.getByColor("Red and gold");
         assertEquals(2, faculties.size());
     }
+    @Test
+    void getFacultiesByNameOrColourIgnoreCase() {
+        List<Faculty> facultyList = new ArrayList<>();
+        Faculty faculty1 = new Faculty(1L, "Gryffindor", "Red and gold");
+        Faculty faculty2 = new Faculty(2L, "gryffindor", "red and gold");
+        facultyList.add(faculty1);
+        facultyList.add(faculty2);
+
+        when(facultyRepository.findByColorOrNameIgnoreCase("Gryffindor", "Red and gold")).thenReturn(facultyList);
+        Collection<Faculty> faculties = facul.getByNameOrColorIgnorCase("Gryffindor","Red and gold");
+        assertEquals(2, faculties.size());
+        verify(facultyRepository, only()).findByColorOrNameIgnoreCase("Gryffindor", "Red and gold");
+    }
 }

@@ -83,4 +83,21 @@ public class StudentServiceTest {
         Collection<Student> students = st.getByAge(23);
         assertEquals(2, students.size());
     }
+    @Test
+    void getStudentsByAgeBetween() {
+        List<Student> studentList = new ArrayList<>();
+        Student student = new Student(1L, "Иван", 32);
+        Student student2 = new Student(2L, "Петр", 12);
+        Student student3 = new Student(3L, "Сергей", 32);
+        Student student4 = new Student(4L, "Николай", 19);
+        studentList.add(student);
+        studentList.add(student2);
+        studentList.add(student3);
+        studentList.add(student4);
+
+        when(studentRepository.findByAgeBetween(13, 16)).thenReturn(studentList);
+        Collection<Student> students = st.findByAgeBetween(13, 16);
+        assertEquals(4, students.size());
+        verify(studentRepository, only()).findByAgeBetween(13, 16);
+    }
 }

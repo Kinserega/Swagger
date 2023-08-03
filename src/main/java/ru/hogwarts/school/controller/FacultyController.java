@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.interfase.FacultyService;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.service.FacultyServiceImpl;
 
 
 @RestController
@@ -20,6 +22,7 @@ public class FacultyController {
     public Faculty add(@RequestBody Faculty faculty) {
         return facultyService.add(faculty);
     }
+
     @PutMapping
     public Faculty upDate(@RequestBody Faculty faculty) {
         return facultyService.upDate(faculty);
@@ -40,8 +43,21 @@ public class FacultyController {
     public Collection<Faculty> getAll() {
         return facultyService.getAll();
     }
+
     @GetMapping("/faculty-by-color")
     public Collection<Faculty> getByColor(String color) {
         return facultyService.getByColor(color);
+    }
+
+    @GetMapping("/filter")
+    public Collection<Faculty> getFacultyByNameOrColor(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String color) {
+        return facultyService.getByNameOrColorIgnorCase(name, color);
+    }
+
+    @GetMapping("/students-by-id/{id}")
+    public Collection<Student> getFacultyStudents(@PathVariable Long id) {
+        return facultyService.getFacultyStudents(id);
     }
 }
