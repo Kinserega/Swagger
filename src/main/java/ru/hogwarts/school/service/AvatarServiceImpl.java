@@ -8,7 +8,6 @@ import ru.hogwarts.school.interfase.StudentService;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
-import ru.hogwarts.school.repository.StudentRepository;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import javax.transaction.Transactional;
@@ -23,15 +22,13 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
-    @Value("avatarka")
+    @Value("${path.to.avatars.folder}")
     private String avatarkaDir;
     private final AvatarRepository avatarRepository;
-    private final StudentRepository studentRepository;
     private final StudentService studentService;
 
-    public AvatarServiceImpl(AvatarRepository avatarRepository, StudentRepository studentRepository, StudentService studentService) {
+    public AvatarServiceImpl(AvatarRepository avatarRepository, StudentService studentService) {
         this.avatarRepository = avatarRepository;
-        this.studentRepository = studentRepository;
         this.studentService = studentService;
     }
     public Avatar findAvatar(long studentId) {

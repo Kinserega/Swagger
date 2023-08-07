@@ -7,8 +7,6 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/student")
@@ -35,7 +33,7 @@ public class StudentController {
     }
 
     @DeleteMapping
-    public ResponseEntity delete(@RequestParam Long id) {
+    public ResponseEntity<Student> delete(@RequestParam Long id) {
         studentService.delete(id);
         return ResponseEntity.ok().build();
     }
@@ -45,13 +43,14 @@ public class StudentController {
         return studentService.getAll();
     }
 
-    @GetMapping("/studet-by-age")
-    public Collection<Student> getByAge(int age) {
+    @GetMapping("/studet-by-age/{age}")
+    public Collection<Student> getByAge(@PathVariable int age) {
         return studentService.getByAge(age);
     }
 
     @GetMapping("/filterStudent")
-    public Collection<Student> getStudentBetween(int min, int max) {
+    public Collection<Student> getStudentBetween(@RequestParam int min,
+                                                 @RequestParam int max) {
         return studentService.findByAgeBetween(min, max);
     }
 
