@@ -138,8 +138,11 @@ class SchoolApplicationTests {
     @Test
     void testGetFacultiesByNameOrColourIgnoreCase() throws Exception {
         Assertions
-                .assertThat(this.restTemplate.getForObject(
-                        "http://localhost:" + port + "/faculty/faculty-by-color?name=green", Collection.class))
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/faculty/filter?color=green", String.class))
+                .isNotNull();
+
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/faculty/filter?name=Slytherin", String.class))
                 .isNotNull();
     }
 
