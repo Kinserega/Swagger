@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.interfase.AvatarService;
 import ru.hogwarts.school.interfase.StudentService;
 import ru.hogwarts.school.model.Avatar;
+import ru.hogwarts.school.repository.AvatarRepository;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/Avatar")
@@ -60,4 +62,12 @@ public class AvatarController {
             is.transferTo(os);
         }
     }
+
+    @GetMapping(value = "/avatar/page")
+    public Collection<Avatar> getAllAvatar(@RequestParam("page") Integer pageNumber,
+                                               @RequestParam ("size") Integer pageSize) {
+        Collection<Avatar> avatars = avatarService.getAllAvatar(pageNumber, pageSize);
+        return avatars;
+    }
+
 }
