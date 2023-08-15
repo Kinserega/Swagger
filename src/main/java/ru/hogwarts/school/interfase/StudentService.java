@@ -18,6 +18,8 @@ public interface StudentService {
     Collection<Student> getAll();
 
     Collection<Student> getByAge(int id);
+    Collection<String> findStudentsWithStartLetteA();
+    Integer middleAgeStudent();
 
     Collection<Student> findByAgeBetween(int min, int max);
 

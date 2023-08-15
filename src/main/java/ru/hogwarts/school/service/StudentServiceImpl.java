@@ -16,7 +16,9 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -97,6 +99,24 @@ public class StudentServiceImpl implements StudentService, GetStudentCategory {
 
         logger.debug("Students with age {} were received", age);
         return foundStudentsList;
+    }
+    @Override
+    public Collection<String> findStudentsWithStartLetteA() {
+        logger.info("Invoked a method for findStudentsWithStartLetteA student");
+        return studentRepository.findAll().parallelStream()
+                        .filter(Objects::nonNull)
+                                .map(Student::getName)
+                                                .filter(name->name.startsWith("А"))
+                                                      .sorted()
+                                                        .collect(Collectors.toList());
+    }
+    public Integer middleAgeStudent() {
+        logger.info("Invoked a method for middleAgeStudent student");
+        return (int) studentRepository.findAll().parallelStream()
+                .filter(Objects::nonNull)
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElse(0);
     }
 
     @Override

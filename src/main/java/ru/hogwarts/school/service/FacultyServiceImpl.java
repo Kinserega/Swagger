@@ -12,9 +12,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -118,6 +116,14 @@ public class FacultyServiceImpl implements FacultyService {
 
         logger.debug("Students of faculty with id {} were received", id);
         return studentsExistsCheck;
+    }
+    public String longNameFaculty() {
+        logger.info("Invoked a method for longNameFaculty student");
+        return facultyRepository.findAll().parallelStream()
+                .filter(Objects::nonNull)
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElse("Факультеты не найдены");
     }
 
     private void facultyIdValidation(Long id) {

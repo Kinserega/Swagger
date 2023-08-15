@@ -54,6 +54,10 @@ public class FacultyController {
             @RequestParam(required = false) String color) {
         return facultyService.getByNameOrColorIgnorCase(name, color);
     }
+    @GetMapping("/long-name-faculty")
+    public String lingNameFaculty() {
+        return facultyService.longNameFaculty();
+    }
 
     @GetMapping("/students-by-id/{id}")
     public Collection<Student> getFacultyStudents(@PathVariable Long id) {

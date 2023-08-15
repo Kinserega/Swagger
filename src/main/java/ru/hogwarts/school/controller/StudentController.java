@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/student")
@@ -43,6 +44,15 @@ public class StudentController {
         return studentService.getAll();
     }
 
+    @GetMapping("/student-start-lette")
+    public Collection<String> findStudentsWithStartLetteA() {
+        return studentService.findStudentsWithStartLetteA();
+    }
+    @GetMapping("/middle-age-student")
+    public Integer middleAgeStudent() {
+        return studentService.middleAgeStudent();
+    }
+
     @GetMapping("/studet-by-age/{age}")
     public Collection<Student> getByAge(@PathVariable int age) {
         return studentService.getByAge(age);
@@ -57,5 +67,13 @@ public class StudentController {
     @GetMapping("fakulty-student/{id}")
     public Faculty getFakultyByStudent(@PathVariable Long id) {
         return studentService.findStudentByIdFaculty(id);
+    }
+    @GetMapping("/parallelStream")
+    public int parallelStream() {
+        int sum = Stream.iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, (a, b) -> a + b);
+        return sum;
     }
 }
