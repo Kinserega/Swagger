@@ -25,4 +25,8 @@ public interface StudentService {
 
     Faculty findStudentByIdFaculty(Long id);
 
+    void threadStudent();
+
+    void threadStudentSynchronized();
+
 }

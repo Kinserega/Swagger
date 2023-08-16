@@ -14,10 +14,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -144,6 +141,51 @@ public class StudentServiceImpl implements StudentService, GetStudentCategory {
 
         logger.debug("Faculty of student with id {} was received", id);
         return faculty;
+    }
+
+    @Override
+    public void threadStudent() {
+        logger.info("Invoked a method for threadStudent student");
+        Queue<Student> students = new ArrayDeque<>(studentRepository.findAll());
+       printNameStudentThread(students,2);
+
+        Thread thread = new Thread(()->{
+            printNameStudentThread(students,2);
+        });
+        thread.start();
+        Thread thread2 = new Thread(()->{
+            printNameStudentThread(students,2);
+        });
+        thread2.start();
+    }
+
+
+    @Override
+    public void threadStudentSynchronized() {
+        logger.info("Invoked a method for threadStudentSynchronized student");
+        Queue<Student> students = new ArrayDeque<>(studentRepository.findAll());
+        printNameStudentThreadSynchron(students,2);
+
+        Thread thread = new Thread(()->{
+            printNameStudentThreadSynchron(students,2);
+        });
+        thread.start();
+        Thread thread2 = new Thread(()->{
+            printNameStudentThreadSynchron(students,2);
+        });
+        thread2.start();
+    }
+
+    private void printNameStudentThread(Queue<Student> queue, int amount) {
+        for (int i = 0; i < amount; i++) {
+            System.out.println(queue.poll().getName());
+        }
+    }
+
+    private synchronized void printNameStudentThreadSynchron(Queue<Student> queue, int amount) {
+        for (int i = 0; i < amount; i++) {
+            System.out.println(queue.poll().getName());
+        }
     }
 
     @Override

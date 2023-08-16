@@ -48,6 +48,7 @@ public class StudentController {
     public Collection<String> findStudentsWithStartLetteA() {
         return studentService.findStudentsWithStartLetteA();
     }
+
     @GetMapping("/middle-age-student")
     public Integer middleAgeStudent() {
         return studentService.middleAgeStudent();
@@ -64,10 +65,22 @@ public class StudentController {
         return studentService.findByAgeBetween(min, max);
     }
 
+    @GetMapping("/thread-student")
+    public void threadStudent() {
+        studentService.threadStudent();
+    }
+
+    @GetMapping("/thread-student-synchron")
+    public void threadStudentSynchronized() {
+        studentService.threadStudentSynchronized();
+    }
+
+
     @GetMapping("fakulty-student/{id}")
     public Faculty getFakultyByStudent(@PathVariable Long id) {
         return studentService.findStudentByIdFaculty(id);
     }
+
     @GetMapping("/parallelStream")
     public int parallelStream() {
         int sum = Stream.iterate(1, a -> a + 1)
